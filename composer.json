@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "aws/aws-sdk-php": "^3.337",
         "inertiajs/inertia-laravel": "^2.0",
         "intervention/image": "*",
         "laravel/breeze": "*",
@@ -16,6 +17,7 @@
         "laravel/telescope": "*",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "*",
+        "php-ffmpeg/php-ffmpeg": "^1.3",
         "spatie/laravel-medialibrary": "*",
         "tightenco/ziggy": "^2.0"
     },
