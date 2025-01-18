@@ -12,17 +12,19 @@ class VideoResource extends JsonResource
         return [
             'id' => $this->id,
             'caption' => $this->caption,
-            'video_url' => $this->video_path ? Storage::url($this->video_path) : null,
-            'thumbnail_url' => $this->thumbnail_path ? Storage::url($this->thumbnail_path) : null,
+            'video_url' => $this->video_url,
+            'thumbnail_url' => $this->thumbnail_url,
             'is_private' => $this->is_private,
             'created_at' => $this->created_at->toIso8601String(),
             'updated_at' => $this->updated_at->toIso8601String(),
-            'user' => new UserResource($this->whenLoaded('user')),
+            'views_count' => $this->views_count,
             'likes_count' => $this->whenCounted('likes'),
             'comments_count' => $this->whenCounted('comments'),
+            'hashtags' => $this->hashtags,
+            'user' => new UserResource($this->whenLoaded('user')),
             'is_liked' => $this->when(
-                auth()->check(),
-                fn() => $this->likes->contains('user_id', auth()->id())
+                $request->user(),
+                fn() => $this->isLikedBy($request->user())
             ),
             'can' => [
                 'update' => $request->user()?->can('update', $this->resource),

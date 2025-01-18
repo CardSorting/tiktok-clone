@@ -23,12 +23,15 @@ class Video extends Model
         'is_private',
         'is_approved',
         'duration',
+        'processing_status',
+        'hashtags',
     ];
 
     protected $casts = [
         'is_private' => 'boolean',
         'is_approved' => 'boolean',
         'duration' => 'integer',
+        'hashtags' => 'array',
     ];
 
     protected $appends = [
@@ -71,6 +74,11 @@ class Video extends Model
         return $query->where('user_id', $userId);
     }
 
+    public function scopeWithHashtag($query, $hashtag)
+    {
+        return $query->whereJsonContains('hashtags', $hashtag);
+    }
+
     public function getVideoUrlAttribute(): ?string
     {
         return $this->video_path ? Storage::url($this->video_path) : null;
@@ -103,5 +111,16 @@ class Video extends Model
         return !$this->is_private || 
                $this->isOwnedBy($user) || 
                $this->user->followers()->where('follower_id', $user->id)->exists();
+    }
+
+    public function extractHashtags(): array
+    {
+        preg_match_all('/#(\w+)/', $this->caption, $matches);
+        return $matches[1] ?? [];
+    }
+
+    public function updateHashtags(): void
+    {
+        $this->update(['hashtags' => $this->extractHashtags()]);
     }
 }

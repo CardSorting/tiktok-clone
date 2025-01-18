@@ -27,8 +27,6 @@ class VideoRequest extends FormRequest
                 'file',
                 'mimetypes:video/mp4,video/quicktime',
                 'max:51200', // 50MB
-                new VideoDuration(60), // Max 60 seconds
-                new VideoAspectRatio('9:16') // TikTok-style aspect ratio
             ];
             
             $rules['thumbnail'] = [
@@ -36,8 +34,6 @@ class VideoRequest extends FormRequest
                 'image',
                 'mimes:jpeg,png,jpg',
                 'max:2048', // 2MB
-                'dimensions:min_width=640,min_height=1138', // 9:16 aspect ratio
-                Rule::dimensions()->ratio(9 / 16) // Ensure 9:16 aspect ratio
             ];
         }
 
@@ -53,7 +49,6 @@ class VideoRequest extends FormRequest
             'thumbnail.image' => 'The thumbnail must be a valid image',
             'thumbnail.mimes' => 'The thumbnail must be a JPEG, PNG, or JPG file',
             'thumbnail.max' => 'The thumbnail may not be greater than 2MB',
-            'thumbnail.dimensions' => 'The thumbnail must have a 9:16 aspect ratio (minimum 640x1138)',
         ];
     }
 

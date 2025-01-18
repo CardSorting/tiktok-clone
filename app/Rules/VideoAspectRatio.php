@@ -3,7 +3,6 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Aws\MediaConvert\MediaConvertClient;
 
 class VideoAspectRatio implements Rule
 {
@@ -16,13 +15,12 @@ class VideoAspectRatio implements Rule
 
     public function passes($attribute, $value)
     {
-        // MediaConvert will handle aspect ratio validation during processing
-        // We'll just check if the file exists and is a video
+        // Basic validation - actual aspect ratio validation will be handled by MediaConvert
         return $value->isValid() && str_starts_with($value->getMimeType(), 'video/');
     }
 
     public function message()
     {
-        return 'The :attribute must be a valid video file with aspect ratio '.$this->requiredRatio;
+        return 'The :attribute must be a valid video file';
     }
 }

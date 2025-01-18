@@ -20,6 +20,26 @@ return [
                     'NameModifier' => '_720p'
                 ]
             ]
+        ],
+        'validation' => [
+            'outputs' => [
+                [
+                    'Preset' => 'System-Validation_Only',
+                    'Extension' => 'none',
+                    'NameModifier' => '_validation'
+                ]
+            ]
+        ]
+    ],
+    'validation' => [
+        'aspect_ratio' => [
+            '9:16' => [
+                'width' => 1080,
+                'height' => 1920
+            ]
+        ],
+        'duration' => [
+            'max' => 60 // seconds
         ]
     ]
 ];
