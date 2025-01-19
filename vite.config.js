@@ -10,4 +10,9 @@ export default defineConfig({
         }),
         react(),
     ],
+    build: {
+        rollupOptions: {
+            external: ['@inertiajs/inertia', '@inertiajs/inertia-react', 'use-double-tap'],
+        },
+    },
 });
